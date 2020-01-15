@@ -24,21 +24,20 @@ function (_Component) {
     _this.onDayChange = _this.onDayChange.bind(_assertThisInitialized(_this));
     _this.onAtHourChange = _this.onAtHourChange.bind(_assertThisInitialized(_this));
     _this.onAtMinuteChange = _this.onAtMinuteChange.bind(_assertThisInitialized(_this));
+    _this.state = {
+      'value': _this.props.value
+    };
+
+    if (_this.state.value[3] === '?') {
+      _this.state.every = false;
+    } else {
+      _this.state.every = true;
+    }
+
     return _this;
   }
 
   _createClass(CustomCron, [{
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      this.state.value = this.props.value;
-
-      if (this.state.value[3] === '?') {
-        this.state.every = false;
-      } else {
-        this.state.every = true;
-      }
-    }
-  }, {
     key: "onDayChange",
     value: function onDayChange(e) {
       if (e.target.value > 0 && e.target.value < 32 || e.target.value == '') {
@@ -72,7 +71,6 @@ function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      this.state.value = this.props.value;
       return React.createElement("div", {
         className: "tab-pane"
       }, React.createElement("div", {

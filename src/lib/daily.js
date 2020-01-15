@@ -11,15 +11,15 @@ export default class CustomCron extends Component {
         this.onDayChange = this.onDayChange.bind(this);
         this.onAtHourChange = this.onAtHourChange.bind(this);
         this.onAtMinuteChange = this.onAtMinuteChange.bind(this);
-    }
-    componentWillMount() {
-        this.state.value = this.props.value;
+
+        this.state = { 'value' : this.props.value }
         if(this.state.value[3] === '?') {
             this.state.every = false;
         } else {
             this.state.every = true;
         }
     }
+  
     onDayChange(e) {
         if((e.target.value > 0 && e.target.value < 32 ) || e.target.value == '') {
             let val = ['0',this.state.value[1] === '*' ? '0' : this.state.value[1], this.state.value[2] === '*' ? '0': this.state.value[2],'*','*','?','*'];
@@ -43,7 +43,6 @@ export default class CustomCron extends Component {
         this.props.onChange(val)
     }
     render() {
-        this.state.value = this.props.value;
         return (<div className="tab-pane" >
                     <div className="well well-small">
                         <input type="radio" onChange={(e) => {this.setState({every:true}) ; this.props.onChange()}} value="1" name="DailyRadio" checked={this.state.every ? true : false} />

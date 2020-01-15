@@ -17,23 +17,21 @@ function (_Component) {
     _classCallCheck(this, CustomCron);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(CustomCron).call(this, props));
-    _this.state = {};
     _this.onHourChange = _this.onHourChange.bind(_assertThisInitialized(_this));
     _this.onAtHourChange = _this.onAtHourChange.bind(_assertThisInitialized(_this));
     _this.onAtMinuteChange = _this.onAtMinuteChange.bind(_assertThisInitialized(_this));
+    _this.state = {
+      'value': _this.props.value
+    };
+
+    if (_this.state.value[2].search('0/') === 0 || _this.state.value[2] === '*') {
+      _this.state.every = true;
+    }
+
     return _this;
   }
 
   _createClass(CustomCron, [{
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      this.state.value = this.props.value;
-
-      if (this.state.value[2].search('0/') === 0 || this.state.value[2] === '*') {
-        this.state.every = true;
-      }
-    }
-  }, {
     key: "onHourChange",
     value: function onHourChange(e) {
       if (this.state.every && (e.target.value > 0 && e.target.value < 24 || e.target.value == '')) {

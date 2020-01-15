@@ -14,6 +14,7 @@ export default class CustomCron extends Component {
         this.onAtMinuteChange = this.onAtMinuteChange.bind(this);
         this.getHours = this.getHours.bind(this);
         this.getMinutes = this.getMinutes.bind(this);
+        this.state = {'value' : this.props.value};
     }
     getStartDate(props) {
         // load cron pattern:
@@ -22,9 +23,7 @@ export default class CustomCron extends Component {
         // }
         return new Date().toLocaleDateString();
     }
-    componentWillMount() {
-        this.setState({'value' : this.props.value});
-    }
+
     onDayChange(date) {
         
         let val = [...this.state.value];

@@ -4,19 +4,17 @@ import React, { Component } from 'react';
 export default class CustomCron extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            
-        };
+       
         this.onHourChange = this.onHourChange.bind(this);
         this.onAtHourChange = this.onAtHourChange.bind(this);
         this.onAtMinuteChange = this.onAtMinuteChange.bind(this);
-    }
-    componentWillMount() {
-        this.state.value = this.props.value;
+
+        this.state = { 'value' : this.props.value };
         if(this.state.value[2].search('0/') === 0 || this.state.value[2] === '*') {
             this.state.every = true;
         }
     }
+
     onHourChange(e) {
         if(this.state.every && ((e.target.value > 0 && e.target.value < 24) || e.target.value == '')) {
             let val = ['0','0','*','*','*','?','*'];

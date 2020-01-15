@@ -33,6 +33,9 @@ function (_Component) {
     _this.onAtMinuteChange = _this.onAtMinuteChange.bind(_assertThisInitialized(_this));
     _this.getHours = _this.getHours.bind(_assertThisInitialized(_this));
     _this.getMinutes = _this.getMinutes.bind(_assertThisInitialized(_this));
+    _this.state = {
+      'value': _this.props.value
+    };
     return _this;
   }
 
@@ -44,13 +47,6 @@ function (_Component) {
       //     return new Date(`${props.value[4]}/${props.value[3]}/${props.value[6]}`)
       // }
       return new Date().toLocaleDateString();
-    }
-  }, {
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      this.setState({
-        'value': this.props.value
-      });
     }
   }, {
     key: "onDayChange",
