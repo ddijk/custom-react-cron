@@ -88,8 +88,38 @@ function (_Component) {
         onChange: this.onHourChange,
         value: this.state.value[2].split('/')[1] ? this.state.value[2].split('/')[1] : ''
       }), React.createElement("span", null, "\xA0hour(s)\xA0")), React.createElement("div", {
-        className: "well row well-small margin-right-0 margin-left-0"
-      })));
+        className: "well row well-small margin-right-0 margin-left-0",
+        style: {
+          marginRight: 0
+        }
+      }, React.createElement("div", {
+        className: "col-md-6",
+        style: {
+          paddingLeft: 0
+        }
+      }, React.createElement("input", {
+        type: "radio",
+        onChange: function onChange(e) {
+          _this2.setState({
+            every: false
+          });
+
+          _this2.props.onChange();
+        },
+        checked: this.state.every ? false : true
+      }), React.createElement("span", {
+        className: "margin-right-10 "
+      }, "\xA0At\xA0"), React.createElement("select", {
+        className: "hours",
+        disabled: this.state.every ? true : false,
+        onChange: this.onAtHourChange,
+        value: this.state.value[2].split('/')[0] ? this.state.value[2].split('/')[0] : '00'
+      }, this.getHours()), "\xA0 : \xA0", React.createElement("select", {
+        className: "minutes",
+        disabled: this.state.every ? true : false,
+        onChange: this.onAtMinuteChange,
+        value: this.state.value[1]
+      }, this.getMinutes())))));
     }
   }, {
     key: "getHours",
