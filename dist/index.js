@@ -94,6 +94,7 @@ function (_Component) {
 
       return tabs.map(function (d) {
         return React.createElement("li", {
+          key: d,
           className: _this2.state.selectedTab === d ? 'active' : ''
         }, React.createElement("a", {
           onClick: _this2.tabChanged.bind(_this2, d)
@@ -122,8 +123,12 @@ function (_Component) {
       var newVal = '';
       newVal = val.toString().replace(/,/g, ' ');
       newVal = newVal.replace(/!/g, ',');
-      console.log(newVal);
-      this.props.onChange(newVal);
+      var hr = cronstrue.toString(newVal.toString().replace(/,/g, ' ').replace(/!/g, ','));
+      console.log("newVal=".concat(newVal, " en human readable is ").concat(hr));
+      this.props.onChange({
+        newVal: newVal,
+        'humanReadableVal': hr
+      });
     }
   }, {
     key: "getVal",

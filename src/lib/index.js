@@ -73,7 +73,7 @@ export default class CustomCron extends Component {
     }
     getHeaders() {
         return tabs.map(d => {  
-            return <li className={this.state.selectedTab === d ? 'active' : ''}><a onClick={this.tabChanged.bind(this,d)}>{d}</a></li>
+            return <li key={d} className={this.state.selectedTab === d ? 'active' : ''}><a onClick={this.tabChanged.bind(this,d)}>{d}</a></li>
         })
     }
     onValueChange(val) {     
@@ -90,8 +90,8 @@ export default class CustomCron extends Component {
         let newVal = ''
         newVal = val.toString().replace(/,/g,' ')
         newVal = newVal.replace(/!/g, ',')
-        console.log(newVal);
-        this.props.onChange(newVal) 
+        let hr = cronstrue.toString(newVal.toString().replace(/,/g,' ').replace(/!/g, ','))
+        this.props.onChange({newVal, 'humanReadableVal': hr})
     }
     getVal() {
         let val = cronstrue.toString(this.state.value.toString().replace(/,/g,' ').replace(/!/g, ','))
