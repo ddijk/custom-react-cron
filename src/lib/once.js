@@ -26,21 +26,14 @@ export default class CustomCron extends Component {
         this.setState({'value' : this.props.value});
     }
     onDayChange(date) {
-        console.log('type of data: ', date);
-        console.log('type of mon: ', date.format('MM'));
-        console.log('type of mon: ', date.format('M'));
-        let DOB = date.format("DD/MM/YYYY");
-
-        console.log('DOB', DOB);
         
         let val = [...this.state.value];
-        val[3] = date.format("DD/MM/YYYY");
-        val[4] = String(Number(date.format("MM")+1));
+        val[3] = String(Number(date.format("DD")));
+        val[4] = String(Number(date.format("MM")));
 
-        console.log('val:', val);
         this.setState({
             value: val,
-            startDate: DOB
+            startDate: date.format("DD/MM/YYYY")
         });
         this.props.onChange(val)
     }
@@ -55,14 +48,9 @@ export default class CustomCron extends Component {
         this.props.onChange(val)
     }
     render() {
-        // this.setState({'value' : this.props.value});
-        let sd = this.state.startDate;
-        console.log('sd=',sd);
         return (<div className="tab-pane" >
                     <div className="well well-small">
                         &nbsp; In: &nbsp;
-                        {/* <DatePicker selected={ this.state.startDate===""?moment():moment(this.state.startDate,"DD/MM/YYYY")}
-                                       onChange={this.onDayChange} minDate={new Date()} /> */}
                         <DatePicker selected={moment()} value={this.state.startDate}
                                        onChange={this.onDayChange} minDate={moment()} />
                     </div>
@@ -90,14 +78,12 @@ export default class CustomCron extends Component {
 
         if ( !!!this.state.startDate) {
 
-            console.log('Ongeldige start datum ', this.state.startDate);
+            console.log('Invalid start date ', this.state.startDate);
             return false;
         }
         const today = moment().format('DD/MM/YYYY');
 
-        const sd = this.state.startDate;//.format('DD/MM/YYYY');
-
-        return today === sd;
+        return today === this.state.startDate;
     }
     getNextHour() {
         const hourNow = Number(moment().format('hh'));

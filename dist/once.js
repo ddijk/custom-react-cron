@@ -55,20 +55,13 @@ function (_Component) {
   }, {
     key: "onDayChange",
     value: function onDayChange(date) {
-      console.log('type of data: ', date);
-      console.log('type of mon: ', date.format('MM'));
-      console.log('type of mon: ', date.format('M'));
-      var DOB = date.format("DD/MM/YYYY");
-      console.log('DOB', DOB);
-
       var val = _toConsumableArray(this.state.value);
 
-      val[3] = date.format("DD/MM/YYYY");
-      val[4] = String(Number(date.format("MM") + 1));
-      console.log('val:', val);
+      val[3] = String(Number(date.format("DD")));
+      val[4] = String(Number(date.format("MM")));
       this.setState({
         value: val,
-        startDate: DOB
+        startDate: date.format("DD/MM/YYYY")
       });
       this.props.onChange(val);
     }
@@ -89,9 +82,6 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      // this.setState({'value' : this.props.value});
-      var sd = this.state.startDate;
-      console.log('sd=', sd);
       return React.createElement("div", {
         className: "tab-pane"
       }, React.createElement("div", {
@@ -134,14 +124,12 @@ function (_Component) {
     key: "isToday",
     value: function isToday() {
       if (!!!this.state.startDate) {
-        console.log('Ongeldige start datum ', this.state.startDate);
+        console.log('Invalid start date ', this.state.startDate);
         return false;
       }
 
       var today = moment().format('DD/MM/YYYY');
-      var sd = this.state.startDate; //.format('DD/MM/YYYY');
-
-      return today === sd;
+      return today === this.state.startDate;
     }
   }, {
     key: "getNextHour",
