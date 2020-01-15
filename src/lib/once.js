@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment';
 
+moment().format('nl');   
 export default class CustomCron extends Component {
     constructor(props) {
         super(props);
@@ -10,23 +12,35 @@ export default class CustomCron extends Component {
         this.onDayChange = this.onDayChange.bind(this);
         this.onAtHourChange = this.onAtHourChange.bind(this);
         this.onAtMinuteChange = this.onAtMinuteChange.bind(this);
+        this.getHours = this.getHours.bind(this);
+        this.getMinutes = this.getMinutes.bind(this);
     }
     getStartDate(props) {
-        if (props.value && props.value.length) {
-            return new Date(`${props.value[4]}/${props.value[3]}/${props.value[6]}`)
-        }
-        return new Date();
+        // load cron pattern:
+        // if (props.value && props.value.length) {
+        //     return new Date(`${props.value[4]}/${props.value[3]}/${props.value[6]}`)
+        // }
+        return new Date().toLocaleDateString();
     }
     componentWillMount() {
-        this.state.value = this.props.value;
+        this.setState({'value' : this.props.value});
     }
     onDayChange(date) {
+        console.log('type of data: ', date);
+        console.log('type of mon: ', date.format('MM'));
+        console.log('type of mon: ', date.format('M'));
+        let DOB = date.format("DD/MM/YYYY");
+
+        console.log('DOB', DOB);
+        
         let val = [...this.state.value];
-        val[3] = date.getDate().toString();
-        val[4] = (date.getMonth() + 1).toString();
+        val[3] = date.format("DD/MM/YYYY");
+        val[4] = String(Number(date.format("MM")+1));
+
+        console.log('val:', val);
         this.setState({
-            startDate: date,
-            value: val
+            value: val,
+            startDate: DOB
         });
         this.props.onChange(val)
     }
@@ -41,15 +55,16 @@ export default class CustomCron extends Component {
         this.props.onChange(val)
     }
     render() {
-        this.state.value = this.props.value;
+        // this.setState({'value' : this.props.value});
+        let sd = this.state.startDate;
+        console.log('sd=',sd);
         return (<div className="tab-pane" >
                     <div className="well well-small">
                         &nbsp; In: &nbsp;
-                        <DatePicker
-                            selected={this.state.startDate}
-                            onChange={this.onDayChange}
-                            minDate={new Date()}
-                        />
+                        {/* <DatePicker selected={ this.state.startDate===""?moment():moment(this.state.startDate,"DD/MM/YYYY")}
+                                       onChange={this.onDayChange} minDate={new Date()} /> */}
+                        <DatePicker selected={moment()} value={this.state.startDate}
+                                       onChange={this.onDayChange} minDate={moment()} />
                     </div>
                     
                     &nbsp; At: &nbsp;
@@ -67,25 +82,32 @@ export default class CustomCron extends Component {
         let leap = parseInt(this.props.hours) || 1;
         let startHour = this.isToday() ? this.getNextHour() : 0;
         for(let i = startHour ; i<24 ; i = i + leap) {
-            hours.push(<option id={i} value={i < 10 ? `0${i}` : i}>{i < 10 ? `0${i}` : i}</option>)
+            hours.push(<option key={i} id={i} value={i < 10 ? `0${i}` : i}>{i < 10 ? `0${i}` : i}</option>)
         }
         return hours;
     }
     isToday() {
-        const today = new Date()
-        return this.state.startDate.getDate() == today.getDate() &&
-            this.state.startDate.getMonth() == today.getMonth() &&
-            this.state.startDate.getFullYear() == today.getFullYear()
+
+        if ( !!!this.state.startDate) {
+
+            console.log('Ongeldige start datum ', this.state.startDate);
+            return false;
+        }
+        const today = moment().format('DD/MM/YYYY');
+
+        const sd = this.state.startDate;//.format('DD/MM/YYYY');
+
+        return today === sd;
     }
     getNextHour() {
-        const hourNow = this.state.startDate.getHours();
+        const hourNow = Number(moment().format('hh'));
         return (hourNow < 23) ? hourNow + 1 : 23;
     }
     getMinutes() {
         let minutes = [];
         let leap = parseInt(this.props.minutes) || 1;
         for(let i = 0 ; i<60 ; i = i + leap) {
-            minutes.push(<option id={i} value={i < 10 ? `0${i}` : i}>{i < 10 ? `0${i}` : i}</option>)
+            minutes.push(<option key={i} id={i} value={i < 10 ? `0${i}` : i}>{i < 10 ? `0${i}` : i}</option>)
         }
         return minutes;
     }
