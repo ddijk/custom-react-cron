@@ -34,7 +34,7 @@ class App extends Component {
   render() {
     return (<div>
       <CustomCron
-        tabs={['Daily','Weekly', 'Monthly']}
+        tabs={['Once', 'Minutes', 'Hourly', 'Daily', 'Weekly', 'Monthly']}
         onChange={(e)=> {this.setState({value:e}); console.log(e)}}
         hours={2}
         minutes={15}
