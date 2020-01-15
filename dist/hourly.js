@@ -76,7 +76,7 @@ function (_Component) {
         className: "well well-small"
       }, React.createElement("input", {
         type: "radio",
-        onClick: function onClick(e) {
+        onChange: function onChange(e) {
           _this2.setState({
             every: true
           });
@@ -91,31 +91,7 @@ function (_Component) {
         value: this.state.value[2].split('/')[1] ? this.state.value[2].split('/')[1] : ''
       }), React.createElement("span", null, "\xA0hour(s)\xA0")), React.createElement("div", {
         className: "well row well-small margin-right-0 margin-left-0"
-      }, React.createElement("div", {
-        className: "col-md-offset-2 col-md-6 text_align_right"
-      }, React.createElement("input", {
-        type: "radio",
-        onClick: function onClick(e) {
-          _this2.setState({
-            every: false
-          });
-
-          _this2.props.onChange();
-        },
-        checked: this.state.every ? false : true
-      }), React.createElement("span", {
-        className: "margin-right-10 "
-      }, "\xA0At\xA0"), React.createElement("select", {
-        className: "hours",
-        disabled: this.state.every ? true : false,
-        onChange: this.onAtHourChange,
-        value: this.state.value[2].split('/')[0] ? this.state.value[2].split('/')[0] : '00'
-      }, this.getHours()), "\xA0 : \xA0", React.createElement("select", {
-        className: "minutes",
-        disabled: this.state.every ? true : false,
-        onChange: this.onAtMinuteChange,
-        value: this.state.value[1]
-      }, this.getMinutes())))));
+      })));
     }
   }, {
     key: "getHours",
@@ -125,6 +101,7 @@ function (_Component) {
 
       for (var i = 0; i < 24; i = i + leap) {
         hours.push(React.createElement("option", {
+          key: i,
           value: i < 10 ? "0".concat(i) : i
         }, i < 10 ? "0".concat(i) : i));
       }
@@ -139,6 +116,7 @@ function (_Component) {
 
       for (var i = 0; i < 60; i = i + leap) {
         minutes.push(React.createElement("option", {
+          key: i,
           value: i < 10 ? "0".concat(i) : i
         }, i < 10 ? "0".concat(i) : i));
       }

@@ -8,6 +8,8 @@ import _inherits from "@babel/runtime/helpers/esm/inherits";
 import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment';
+moment().format('nl');
 
 var CustomCron =
 /*#__PURE__*/
@@ -29,33 +31,44 @@ function (_Component) {
     _this.onDayChange = _this.onDayChange.bind(_assertThisInitialized(_this));
     _this.onAtHourChange = _this.onAtHourChange.bind(_assertThisInitialized(_this));
     _this.onAtMinuteChange = _this.onAtMinuteChange.bind(_assertThisInitialized(_this));
+    _this.getHours = _this.getHours.bind(_assertThisInitialized(_this));
+    _this.getMinutes = _this.getMinutes.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(CustomCron, [{
     key: "getStartDate",
     value: function getStartDate(props) {
-      if (props.value && props.value.length) {
-        return new Date("".concat(props.value[4], "/").concat(props.value[3], "/").concat(props.value[6]));
-      }
-
-      return new Date();
+      // load cron pattern:
+      // if (props.value && props.value.length) {
+      //     return new Date(`${props.value[4]}/${props.value[3]}/${props.value[6]}`)
+      // }
+      return new Date().toLocaleDateString();
     }
   }, {
     key: "componentWillMount",
     value: function componentWillMount() {
-      this.state.value = this.props.value;
+      this.setState({
+        'value': this.props.value
+      });
     }
   }, {
     key: "onDayChange",
     value: function onDayChange(date) {
+      console.log('type of data: ', date);
+      console.log('type of mon: ', date.format('MM'));
+      console.log('type of mon: ', date.format('M'));
+      var DOB = date.format("DD/MM/YYYY");
+      console.log('DOB', DOB);
+
       var val = _toConsumableArray(this.state.value);
 
-      val[3] = date.getDate().toString();
-      val[4] = (date.getMonth() + 1).toString();
+      val[3] = date.format("DD/MM/YYYY");
+      val[4] = String(Number(date.format("MM") + 1));
+      console.log('val:', val);
       this.setState({
-        startDate: date,
-        value: val
+        value: val,
+        startDate: DOB
       });
       this.props.onChange(val);
     }
@@ -76,15 +89,18 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      this.state.value = this.props.value;
+      // this.setState({'value' : this.props.value});
+      var sd = this.state.startDate;
+      console.log('sd=', sd);
       return React.createElement("div", {
         className: "tab-pane"
       }, React.createElement("div", {
         className: "well well-small"
       }, "\xA0 In: \xA0", React.createElement(DatePicker, {
-        selected: this.state.startDate,
+        selected: moment(),
+        value: this.state.startDate,
         onChange: this.onDayChange,
-        minDate: new Date()
+        minDate: moment()
       })), "\xA0 At: \xA0", React.createElement("select", {
         id: "DailyHours",
         className: "hours",
@@ -106,6 +122,7 @@ function (_Component) {
 
       for (var i = startHour; i < 24; i = i + leap) {
         hours.push(React.createElement("option", {
+          key: i,
           id: i,
           value: i < 10 ? "0".concat(i) : i
         }, i < 10 ? "0".concat(i) : i));
@@ -116,13 +133,20 @@ function (_Component) {
   }, {
     key: "isToday",
     value: function isToday() {
-      var today = new Date();
-      return this.state.startDate.getDate() == today.getDate() && this.state.startDate.getMonth() == today.getMonth() && this.state.startDate.getFullYear() == today.getFullYear();
+      if (!!!this.state.startDate) {
+        console.log('Ongeldige start datum ', this.state.startDate);
+        return false;
+      }
+
+      var today = moment().format('DD/MM/YYYY');
+      var sd = this.state.startDate; //.format('DD/MM/YYYY');
+
+      return today === sd;
     }
   }, {
     key: "getNextHour",
     value: function getNextHour() {
-      var hourNow = this.state.startDate.getHours();
+      var hourNow = Number(moment().format('hh'));
       return hourNow < 23 ? hourNow + 1 : 23;
     }
   }, {
@@ -133,6 +157,7 @@ function (_Component) {
 
       for (var i = 0; i < 60; i = i + leap) {
         minutes.push(React.createElement("option", {
+          key: i,
           id: i,
           value: i < 10 ? "0".concat(i) : i
         }, i < 10 ? "0".concat(i) : i));

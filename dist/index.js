@@ -124,7 +124,6 @@ function (_Component) {
       newVal = val.toString().replace(/,/g, ' ');
       newVal = newVal.replace(/!/g, ',');
       var hr = cronstrue.toString(newVal.toString().replace(/,/g, ' ').replace(/!/g, ','));
-      console.log("newVal=".concat(newVal, " en human readable is ").concat(hr));
       this.props.onChange({
         newVal: newVal,
         'humanReadableVal': hr

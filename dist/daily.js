@@ -79,7 +79,7 @@ function (_Component) {
         className: "well well-small"
       }, React.createElement("input", {
         type: "radio",
-        onClick: function onClick(e) {
+        onChange: function onChange(e) {
           _this2.setState({
             every: true
           });
@@ -97,7 +97,7 @@ function (_Component) {
       }), "\xA0 day(s)"), React.createElement("div", {
         className: "well well-small"
       }, React.createElement("input", {
-        onClick: function onClick(e) {
+        onChange: function onChange(e) {
           _this2.setState({
             every: false
           });
@@ -128,6 +128,7 @@ function (_Component) {
 
       for (var i = 0; i < 24; i = i + leap) {
         hours.push(React.createElement("option", {
+          key: i,
           id: i,
           value: i < 10 ? "0".concat(i) : i
         }, i < 10 ? "0".concat(i) : i));
@@ -143,6 +144,7 @@ function (_Component) {
 
       for (var i = 0; i < 60; i = i + leap) {
         minutes.push(React.createElement("option", {
+          key: i,
           id: i,
           value: i < 10 ? "0".concat(i) : i
         }, i < 10 ? "0".concat(i) : i));
