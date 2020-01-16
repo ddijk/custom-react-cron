@@ -20,8 +20,20 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(CustomCron).call(this, props));
     _this.state = {
       hour: 0,
-      minute: 0
+      minute: 0,
+      value: _this.props.value
     };
+
+    if (_this.state.value[3] === 'L') {
+      _this.state.every = "2";
+    } else if (_this.state.value[3] === 'LW') {
+      _this.state.every = "3";
+    } else if (_this.state.value[3].startsWith('L')) {
+      _this.state.every = "4";
+    } else {
+      _this.state.every = "1";
+    }
+
     _this.onDayChange = _this.onDayChange.bind(_assertThisInitialized(_this));
     _this.onLastDayChange = _this.onLastDayChange.bind(_assertThisInitialized(_this));
     _this.onAtHourChange = _this.onAtHourChange.bind(_assertThisInitialized(_this));
@@ -30,21 +42,6 @@ function (_Component) {
   }
 
   _createClass(CustomCron, [{
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      this.state.value = this.props.value;
-
-      if (this.state.value[3] === 'L') {
-        this.state.every = "2";
-      } else if (this.state.value[3] === 'LW') {
-        this.state.every = "3";
-      } else if (this.state.value[3].startsWith('L')) {
-        this.state.every = "4";
-      } else {
-        this.state.every = "1";
-      }
-    }
-  }, {
     key: "onDayChange",
     value: function onDayChange(e) {
       if (parseInt(e.target.value) > 0 && parseInt(e.target.value) <= 31 || e.target.value == "") {

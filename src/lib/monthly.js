@@ -6,16 +6,10 @@ export default class CustomCron extends Component {
         super(props);
         this.state = {
             hour:0,
-            minute:0
+            minute:0,
+            value : this.props.value
         };
 
-        this.onDayChange = this.onDayChange.bind(this);
-        this.onLastDayChange = this.onLastDayChange.bind(this);
-        this.onAtHourChange = this.onAtHourChange.bind(this);
-        this.onAtMinuteChange = this.onAtMinuteChange.bind(this);
-    }
-    componentWillMount() {
-        this.state.value = this.props.value;
         if(this.state.value[3] === 'L'){
             this.state.every = "2";
         }else if(this.state.value[3] === 'LW') {
@@ -25,7 +19,13 @@ export default class CustomCron extends Component {
         } else {
             this.state.every = "1";
         }
+
+        this.onDayChange = this.onDayChange.bind(this);
+        this.onLastDayChange = this.onLastDayChange.bind(this);
+        this.onAtHourChange = this.onAtHourChange.bind(this);
+        this.onAtMinuteChange = this.onAtMinuteChange.bind(this);
     }
+    
     onDayChange(e) {
         if(((parseInt(e.target.value) > 0 && parseInt(e.target.value) <= 31)) || e.target.value == "") {
             let val = ['0',this.state.value[1] === '*' ? '0' : this.state.value[1], this.state.value[2] === '*' ? '0': this.state.value[2],this.state.value[3],'1/1', '?','*'];

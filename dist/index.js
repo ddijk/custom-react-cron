@@ -41,39 +41,38 @@ function (_Component) {
     _this.state = {//    selectedTab: tabs[0],
     };
     tabs = props.tabs || defaultTabs;
+
+    if (!_this.props.value || _this.props.value.split(' ').length !== 7) {
+      _this.state.value = defaultTabsVal[tabs[0]];
+      _this.state.selectedTab = tabs[0];
+
+      _this.parentChange(_this.state.value);
+    } else {
+      _this.state.value = _this.props.value.replace(/,/g, '!').split(' ');
+    }
+
+    var val = _this.state.value;
+
+    if (val[6] !== '*') {
+      _this.state.selectedTab = defaultTabs[0];
+    } else if (val[1].search('/') !== -1 && val[2] == '*' && val[3] == '1/1') {
+      _this.state.selectedTab = defaultTabs[1];
+    } else if (val[2].search('/') !== -1) {
+      _this.state.selectedTab = defaultTabs[2];
+    } else if (val[3].search('/') !== -1 || val[5] == 'MON-FRI') {
+      _this.state.selectedTab = defaultTabs[3];
+    } else if (val[3] === '?') {
+      _this.state.selectedTab = defaultTabs[4];
+    } else if (val[3].startsWith('L') || val[5] === '1/1') {
+      _this.state.selectedTab = defaultTabs[5];
+    } else {
+      _this.state.selectedTab = tabs[0];
+    }
+
     return _this;
   }
 
   _createClass(CustomCron, [{
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      if (!this.props.value || this.props.value.split(' ').length !== 7) {
-        this.state.value = defaultTabsVal[tabs[0]];
-        this.state.selectedTab = tabs[0];
-        this.parentChange(this.state.value);
-      } else {
-        this.state.value = this.props.value.replace(/,/g, '!').split(' ');
-      }
-
-      var val = this.state.value;
-
-      if (val[6] !== '*') {
-        this.state.selectedTab = defaultTabs[0];
-      } else if (val[1].search('/') !== -1 && val[2] == '*' && val[3] == '1/1') {
-        this.state.selectedTab = defaultTabs[1];
-      } else if (val[2].search('/') !== -1) {
-        this.state.selectedTab = defaultTabs[2];
-      } else if (val[3].search('/') !== -1 || val[5] == 'MON-FRI') {
-        this.state.selectedTab = defaultTabs[3];
-      } else if (val[3] === '?') {
-        this.state.selectedTab = defaultTabs[4];
-      } else if (val[3].startsWith('L') || val[5] === '1/1') {
-        this.state.selectedTab = defaultTabs[5];
-      } else {
-        this.state.selectedTab = tabs[0];
-      }
-    }
-  }, {
     key: "defaultValue",
     value: function defaultValue(tab) {
       return defaultTabsVal[tab];
