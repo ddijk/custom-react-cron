@@ -89,11 +89,11 @@ export default class CustomCron extends Component {
         let newVal = ''
         newVal = val.toString().replace(/,/g,' ')
         newVal = newVal.replace(/!/g, ',')
-        let hr = cronstrue.toString(newVal.toString().replace(/,/g,' ').replace(/!/g, ','))
+        let hr = cronstrue.toString(newVal.toString().replace(/,/g,' ').replace(/!/g, ','), { use24HourTimeFormat: true })
         this.props.onChange({newVal, 'humanReadableVal': hr})
     }
     getVal() {
-        let val = cronstrue.toString(this.state.value.toString().replace(/,/g,' ').replace(/!/g, ','))
+        let val = cronstrue.toString(this.state.value.toString().replace(/,/g,' ').replace(/!/g, ','), { use24HourTimeFormat: true })
         if(val.search('undefined') === -1) {
             return val;
         }
