@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import cronstrue from 'cronstrue';
+import cronstrue from 'cronstrue/i18n';
 import Once from './once';
 import Minutes from './minutes';
 import Daily from './daily';
@@ -89,11 +89,11 @@ export default class CustomCron extends Component {
         let newVal = ''
         newVal = val.toString().replace(/,/g,' ')
         newVal = newVal.replace(/!/g, ',')
-        let hr = cronstrue.toString(newVal.toString().replace(/,/g,' ').replace(/!/g, ','), { use24HourTimeFormat: true })
+        let hr = cronstrue.toString(newVal.toString().replace(/,/g,' ').replace(/!/g, ','), { use24HourTimeFormat: true, locale: 'nl' })
         this.props.onChange({newVal, 'humanReadableVal': hr})
     }
     getVal() {
-        let val = cronstrue.toString(this.state.value.toString().replace(/,/g,' ').replace(/!/g, ','), { use24HourTimeFormat: true })
+        let val = cronstrue.toString(this.state.value.toString().replace(/,/g,' ').replace(/!/g, ','), { use24HourTimeFormat: true, locale:'nl' })
         if(val.search('undefined') === -1) {
             return val;
         }
