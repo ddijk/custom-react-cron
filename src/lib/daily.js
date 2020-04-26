@@ -21,9 +21,9 @@ export default class CustomCron extends Component {
     }
   
     onDayChange(e) {
-        if((e.target.value > 0 && e.target.value < 32 ) || e.target.value == '') {
+        if((e.target.value > 0 && e.target.value < 32 ) || e.target.value === '') {
             let val = ['0',this.state.value[1] === '*' ? '0' : this.state.value[1], this.state.value[2] === '*' ? '0': this.state.value[2],'*','*','?','*'];
-            if(e.target.value == '') {
+            if (e.target.value === '') {
                 val[3] = '';
             } else {
                 val[3] = `1/${e.target.value}`;
@@ -43,11 +43,12 @@ export default class CustomCron extends Component {
         this.props.onChange(val)
     }
     render() {
+        let val  = this.props.value[3].includes('/') ? this.props.value[3].split('/')[1] :'';
         return (<div className="tab-pane" >
                     <div className="well well-small">
                         <input type="radio" onChange={(e) => {this.setState({every:true}) ; this.props.onChange()}} value="1" name="DailyRadio" checked={this.state.every ? true : false} />
                         &nbsp; Every &nbsp;
-                        <input disabled={this.state.every ? false: true} type="Number" onChange={this.onDayChange} value={this.state.value[3].split('/')[1] ? this.state.value[3].split('/')[1] :''} />
+                        <input disabled={this.state.every ? false: true} type="Number" onChange={this.onDayChange} value={val} />
                         &nbsp; day(s)
                     </div>
                     <div className="well well-small">

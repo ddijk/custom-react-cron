@@ -8,7 +8,7 @@ import Weekly from './weekly';
 import Monthly from './monthly';
 import Yearly from './yearly';
 // import './cron-builder.css';
-const defaultTabs = ['Once', 'Minutes','Hourly','Daily','Weekly', 'Monthly'] //,'Yearly'
+const defaultTabs = [ 'Once', 'Minutes','Hourly','Daily','Weekly', 'Monthly'] //,'Yearly'
 const date = new Date();
 const defaultTabsVal = {
     Once: [ //Now
@@ -86,10 +86,8 @@ export default class CustomCron extends Component {
     }
 
     parentChange(val) {
-        let newVal = ''
-        newVal = val.toString().replace(/,/g,' ')
-        newVal = newVal.replace(/!/g, ',')
-        let hr = cronstrue.toString(newVal.toString().replace(/,/g,' ').replace(/!/g, ','), { use24HourTimeFormat: true, locale: 'nl' })
+        let newVal = val.toString().replace(/,/g,' ').replace(/!/g, ',');
+        let hr = cronstrue.toString(newVal, { use24HourTimeFormat: true, locale: 'nl' })
         this.props.onChange({newVal, 'humanReadableVal': hr})
     }
     getVal() {
@@ -105,25 +103,18 @@ export default class CustomCron extends Component {
         switch(tab) {
             case defaultTabs[0] : 
                 return <Once value={this.state.value} hours={this.props.hours} minutes={this.props.minutes} onChange={this.onValueChange.bind(this)}/>
-                break;
             case defaultTabs[1] : 
                 return <Minutes value={this.state.value} onChange={this.onValueChange.bind(this)}/>
-                break;
             case defaultTabs[2] : 
                 return <Hourly value={this.state.value} hours={this.props.hours} minutes={this.props.minutes} onChange={this.onValueChange.bind(this)}/>
-                break;
             case defaultTabs[3] : 
                 return <Daily value={this.state.value} hours={this.props.hours} minutes={this.props.minutes} onChange={this.onValueChange.bind(this)}/>
-                break;
             case defaultTabs[4] : 
                 return <Weekly value={this.state.value} hours={this.props.hours} minutes={this.props.minutes} onChange={this.onValueChange.bind(this)}/>
-                break;
             case defaultTabs[5] : 
                 return <Monthly value={this.state.value} hours={this.props.hours} minutes={this.props.minutes} onChange={this.onValueChange.bind(this)}/>
-                break;
             case defaultTabs[6] : 
                 return <Yearly value={this.state.value} hours={this.props.hours} minutes={this.props.minutes} onChange={this.onValueChange.bind(this)}/>
-                break;
             default: 
                 return
         }

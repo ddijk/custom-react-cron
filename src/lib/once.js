@@ -8,13 +8,12 @@ export default class CustomCron extends Component {
     constructor(props) {
         super(props);
         const startDate = this.getStartDate(props);
-        this.state = { startDate };
         this.onDayChange = this.onDayChange.bind(this);
         this.onAtHourChange = this.onAtHourChange.bind(this);
         this.onAtMinuteChange = this.onAtMinuteChange.bind(this);
         this.getHours = this.getHours.bind(this);
         this.getMinutes = this.getMinutes.bind(this);
-        this.state = {'value' : this.props.value};
+        this.state = {'value' : this.props.value, startDate};
     }
     getStartDate(props) {
         // load cron pattern:
@@ -24,7 +23,9 @@ export default class CustomCron extends Component {
         return new Date().toLocaleDateString();
     }
 
-    onDayChange(date) {
+    onDayChange(jsDate) {
+
+        let date = moment(jsDate);
         
         let val = [...this.state.value];
         val[3] = String(Number(date.format("DD")));
@@ -50,8 +51,8 @@ export default class CustomCron extends Component {
         return (<div className="tab-pane" >
                     <div className="well well-small">
                         &nbsp; In: &nbsp;
-                        <DatePicker selected={moment()} value={this.state.startDate}
-                                       onChange={this.onDayChange} minDate={moment()} />
+                        <DatePicker selected={new Date()} value={this.state.startDate}
+                                       onChange={this.onDayChange} minDate={new Date()} />
                     </div>
                     
                     &nbsp; At: &nbsp;

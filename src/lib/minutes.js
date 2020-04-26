@@ -2,14 +2,9 @@ import React, { Component } from 'react';
 
 
 export default class CustomCron extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          
-        };
-    }
+    
     onChange(e) {
-        if((e.target.value > 0 && e.target.value < 60) || e.target.value == '') {
+        if((e.target.value > 0 && e.target.value < 60) || e.target.value === '') {
             let val = ['0','*','*','*','*','?','*']
             
             if(e.target.value == '') {
@@ -21,9 +16,9 @@ export default class CustomCron extends Component {
         } 
     }
     render() {
-        this.state.value = this.props.value
+        const val = this.props.value? this.props.value[1].split('/')[1]: 1;
         return (<div className="well">   
-               Every <input type="Number" onChange={this.onChange.bind(this)} value={this.state.value[1].split('/')[1]} min={1} max={60}/> minute(s)'
+               Every <input type="Number" onChange={this.onChange.bind(this)} value={val} min={1} max={60}/> minute(s)'
         </div>)
     }
 }

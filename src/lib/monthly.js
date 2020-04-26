@@ -55,35 +55,34 @@ export default class CustomCron extends Component {
         this.props.onChange(val)
     }
     render() {
-        this.state.value = this.props.value;
         return (<div className="tab-pane" >
                     <div className="well well-small">
-                        <input type="radio" onChange={(e) => {this.setState({every:e.target.value}); this.props.onChange(['0',this.state.value[1] === '*' ? '0' : this.state.value[1], this.state.value[2] === '*' ? '0': this.state.value[2],'1','1/1', '?','*'])}} value="1" name="MonthlyRadio" checked={this.state.every === "1" ? true : false} />
+                        <input type="radio" onChange={(e) => {this.setState({every:e.target.value}); this.props.onChange(['0',this.props.value[1] === '*' ? '0' : this.props.value[1], this.props.value[2] === '*' ? '0': this.props.value[2],'1','1/1', '?','*'])}} value="1" name="MonthlyRadio" checked={this.state.every === "1" ? true : false} />
                         &nbsp;Day&nbsp;
-                        <input readOnly={this.state.every !== "1"} type="number" value={this.state.value[3]} onChange={this.onDayChange}/>
+                        <input readOnly={this.state.every !== "1"} type="number" value={this.props.value[3]} onChange={this.onDayChange}/>
                         &nbsp;of every month(s)
                     </div>
 
                     <div className="well well-small">
-                        <input onChange={(e) => {this.setState({every:e.target.value}); this.props.onChange(['0',this.state.value[1] === '*' ? '0' : this.state.value[1], this.state.value[2] === '*' ? '0': this.state.value[2],'L','*', '?','*'])}} type="radio" value="2" name="DailyRadio" checked={this.state.every === "2" ? true : false}/>
+                        <input onChange={(e) => {this.setState({every:e.target.value}); this.props.onChange(['0',this.props.value[1] === '*' ? '0' : this.props.value[1], this.props.value[2] === '*' ? '0': this.props.value[2],'L','*', '?','*'])}} type="radio" value="2" name="DailyRadio" checked={this.state.every === "2" ? true : false}/>
                         &nbsp; Last day of every month &nbsp;
                     </div>
                     <div className="well well-small">
-                        <input onChange={(e) => {this.setState({every:e.target.value}); this.props.onChange(['0',this.state.value[1] === '*' ? '0' : this.state.value[1], this.state.value[2] === '*' ? '0': this.state.value[2] ,'LW','*', '?','*'])}} type="radio" value="3" name="DailyRadio" checked={this.state.every === "3" ? true : false}/>
+                        <input onChange={(e) => {this.setState({every:e.target.value}); this.props.onChange(['0',this.props.value[1] === '*' ? '0' : this.props.value[1], this.props.value[2] === '*' ? '0': this.props.value[2] ,'LW','*', '?','*'])}} type="radio" value="3" name="DailyRadio" checked={this.state.every === "3" ? true : false}/>
                         &nbsp; On the last weekday of every month &nbsp;
                     </div>
                     <div className="well well-small">
-                        <input type="radio"  onChange={(e) => {this.setState({every:e.target.value});  this.props.onChange(['0',this.state.value[1] === '*' ? '0' : this.state.value[1], this.state.value[2] === '*' ? '0': this.state.value[2],`L-${1}`,'*', '?','*']) }} value="4" name="MonthlyRadio" checked={this.state.every === "4" ? true : false} />
+                        <input type="radio"  onChange={(e) => {this.setState({every:e.target.value});  this.props.onChange(['0',this.props.value[1] === '*' ? '0' : this.props.value[1], this.props.value[2] === '*' ? '0': this.props.value[2],`L-${1}`,'*', '?','*']) }} value="4" name="MonthlyRadio" checked={this.state.every === "4" ? true : false} />
                        
-                        <input readOnly={this.state.every !== "4"} type="number" value={this.state.value[3].split('-')[1]} onChange={this.onLastDayChange}/>
+                        <input readOnly={this.state.every !== "4"} type="number" value={this.props.value[3].split('-')[1]} onChange={this.onLastDayChange}/>
                         &nbsp;day(s) before the end of the month
                     </div>
                     &nbsp; Start time &nbsp;
-                    <select  className="hours" onChange={this.onAtHourChange} value={this.state.value[2]}>
+                    <select  className="hours" onChange={this.onAtHourChange} value={this.props.value[2]}>
                         {this.getHours()}
                     </select>
                     &nbsp; : &nbsp;
-                    <select value="DailyMinutes" className="minutes"  onChange={this.onAtMinuteChange} value={this.state.value[1]}>
+                    <select  className="minutes" onChange={this.onAtMinuteChange} value={this.props.value[1]}>
                         {this.getMinutes()}
                     </select>
                 </div>)
