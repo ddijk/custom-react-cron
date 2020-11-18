@@ -86,9 +86,9 @@ export default class CustomCron extends Component {
         return today === this.state.startDate;
     }
     getNextHour() {
-        const hourNow = Number(moment().format('hh'));
-        return (hourNow < 23) ? hourNow + 1 : 23;
+        return Number(moment().format('HH'));
     }
+    
     getMinutes() {
         let minutes = [];
         let leap = parseInt(this.props.minutes) || 1;
