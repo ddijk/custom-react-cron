@@ -16,10 +16,6 @@ export default class CustomCron extends Component {
         this.state = {'value' : this.props.value, startDate};
     }
     getStartDate(props) {
-        // load cron pattern:
-        // if (props.value && props.value.length) {
-        //     return new Date(`${props.value[4]}/${props.value[3]}/${props.value[6]}`)
-        // }
         return new Date().toLocaleDateString();
     }
 
@@ -30,6 +26,7 @@ export default class CustomCron extends Component {
         let val = [...this.state.value];
         val[3] = String(Number(date.format("DD")));
         val[4] = String(Number(date.format("MM")));
+        val[6] = String(Number(date.format("YYYY")));
 
         this.setState({
             value: val,

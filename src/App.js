@@ -35,7 +35,7 @@ class App extends Component {
     return (<div>
       <CustomCron
         tabs={['Once', 'Minutes', 'Hourly', 'Daily', 'Weekly', 'Monthly']}
-        onChange={(e)=> {this.setState({value:e}); console.log(e)}}
+        onChange={(e)=> this.setState({value:e}) }
         hours={2}
         minutes={15}
         style={this.cronStyle}
